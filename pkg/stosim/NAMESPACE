@@ -1,0 +1,2 @@
+useDynLib(stosim)
+exportPattern("^[[:alpha:]]+")
