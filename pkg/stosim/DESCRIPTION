@@ -8,6 +8,7 @@ Maintainer: Jacob T. Ormerod <jtormerod@gmail.com>
 Description: Reliability Modeling for Repairable Systems
 License: GPL (>= 2)
 LazyLoad: yes
-Depends: Rcpp (>= 0.9.4), tcltk2
-LinkingTo: Rcpp
+Imports: Rcpp
+Depends: RcppArmadillo, tcltk2
+LinkingTo: Rcpp, RcppArmadillo
 Packaged: 2012-01-28 07:07:44 UTC; Administrator

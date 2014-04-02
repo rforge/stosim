@@ -1,2 +1,3 @@
 useDynLib(stosim)
 exportPattern("^[[:alpha:]]+")
+importFrom(Rcpp, evalCpp)
