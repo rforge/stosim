@@ -22,6 +22,11 @@ Returns a dataframe containing columns for Time and Duration of each simulated e
 }
 
 \references{
+  Robert, Christian P., G. Casella (2010) Introducing Monte Carlo Methods with R.
+  Springer
+  
+    Taylor HM,  Karlin S (1998) An Introduction to Stochastic Modeling, 3rd Edition,
+  Acadmic Press.
 }
 
 \examples{

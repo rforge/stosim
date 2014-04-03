@@ -1,6 +1,6 @@
    SimHistory<-function(Model,SimulationYears = 2000,SimulationYearsPerPage = 1000) { 
      
-  require(tcltk2)
+  
   ShowProgress=FALSE
   thisRNGkind="Marsaglia-Multicarry"
 				

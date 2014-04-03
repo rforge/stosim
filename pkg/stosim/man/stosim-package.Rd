@@ -31,7 +31,7 @@ scripts, and ad hoc analysis of reliability parameters.
 \author{
 Jacob T. Ormerod
 
-Maintainer: Jacob T. Ormerod <jtormerod@gmail.com>
+Maintainer: Jacob T. Ormerod <jake@openreliability.org>
 }
 \references{
   Jones, O.D., R. Maillardet, and A.P. Robinson (2009) An Introduction
@@ -40,8 +40,8 @@ Maintainer: Jacob T. Ormerod <jtormerod@gmail.com>
   Robert, Christian P., G. Casella (2010) Introducing Monte Carlo Methods with R.
   Springer
 
-  Shridharbhai, Trivedi K.(2002) Probability and Statistics with Reliability,
-  Queuing and Computer Science Applications, Second Edition.  John Wiley & Sons
+  Taylor HM,  Karlin S (1998) An Introduction to Stochastic Modeling, 3rd Edition,
+  Acadmic Press.
   
   Silkworth, David J. (1998) "Confidence Curves: A Reliability Modelling Technique for
   the Practical Application of Process Unit and Subsystem Failure Data". American
