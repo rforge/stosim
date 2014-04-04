@@ -10,20 +10,28 @@
 #include "stosim.h"
 
 
- SEXP SimulationHistory(Rcpp::NumericVector& OpLine_Vec,
-                        Rcpp::NumericVector& Event_ID_Vec,
-                        Rcpp::NumericVector& FD_Vec,
-                        Rcpp::NumericVector& FP1_Vec,
-                        Rcpp::NumericVector& FP2_Vec,
-                        Rcpp::NumericVector& FP3_Vec,
-                        Rcpp::NumericVector& RD_Vec,
-                        Rcpp::NumericVector& RP1_Vec,
-                        Rcpp::NumericVector& RP2_Vec,
-                        Rcpp::NumericVector& RP3_Vec,
-                        Rcpp::IntegerVector& Seed_Vec,
-                        Rcpp::NumericVector& SimulationYears)
+ SEXP SimulationHistory(SEXP arg1, SEXP arg2, SEXP arg3,
+      SEXP arg4,  SEXP arg5, SEXP arg6,
+        SEXP arg7,  SEXP arg8, SEXP arg9,
+          SEXP arg10,  SEXP arg11, SEXP arg12)
 
 {     using namespace Rcpp;
+
+//src <- '
+		// set vector arguments from R into Rcpp vector classes for use in C++
+Rcpp::NumericVector OpLine_Vec(arg1);
+Rcpp::NumericVector Event_ID_Vec(arg2);
+Rcpp::NumericVector FD_Vec(arg3);
+Rcpp::NumericVector FP1_Vec(arg4);
+Rcpp::NumericVector FP2_Vec(arg5);
+Rcpp::NumericVector FP3_Vec(arg6);
+Rcpp::NumericVector RD_Vec(arg7);
+Rcpp::NumericVector RP1_Vec(arg8);
+Rcpp::NumericVector RP2_Vec(arg9);
+Rcpp::NumericVector RP3_Vec(arg10);
+Rcpp::IntegerVector Seed_Vec(arg11);
+Rcpp::NumericVector SimulationYears(arg12);
+
 
 int ModelSize = Seed_Vec.size();
 Rcpp::RNGScope Scope;

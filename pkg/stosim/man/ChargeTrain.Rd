@@ -39,7 +39,7 @@ ChargeTrain
       A third parameter for the failure distribution (FD). A translation parameter applicable to
 	  Weibull, only.
     }
-    \item{\code{Rd}}{
+    \item{\code{RD}}{
       RD: a factor identifying the distribution for repair time data. Only \code{"L"}, \code{"W"},
       and \code{"N"} have been implemented in intended recieving function SimHistory.
     }
