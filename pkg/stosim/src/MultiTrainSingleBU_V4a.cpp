@@ -6,7 +6,7 @@
 #include "stosim.h"
 
 
- SEXP MultiTrainSingleBU_V4a(SEXP arg1, SEXP arg2, SEXP arg3,
+ SEXP MultiTrainSingleBU4a(SEXP arg1, SEXP arg2, SEXP arg3,
       SEXP arg4,  SEXP arg5, SEXP arg6,
         SEXP arg7,  SEXP arg8)
 
