@@ -21,8 +21,6 @@ Returns a dataframe containing columns for Time and Duration for each change to 
 }
 
 \references{
-URL https://sites.google.com/site/jtoreliability/
-
 Carazas et. al.,"Availability Analysis of Gas Turbines Used in Power Plants",International Journal of Thermodynamics, Vol. 12 (No.1), March 2009 
 }
 
