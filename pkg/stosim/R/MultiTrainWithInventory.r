@@ -1,4 +1,4 @@
-MultiTrainWithInventory<-function(ModelDetail, ReserveHrs, CapacityHrs, RefillHrs, TurndownLimit=NULL, TurndownTime=NULL, ShowProgress=FALSE) {			
+MultiTrainWithInventory<-function(ModelDetail, CapacityHrs, ReserveHrs, RefillHrs, TurndownLimit=0, TurndownTime=1, ShowProgress=FALSE) {			
 	  OutputDF1=NULL		
 	  OutputDF2=NULL		
 	## adjustment of input arguments to match MultiTrainSingleBU4a		
