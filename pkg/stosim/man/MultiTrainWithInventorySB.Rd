@@ -1,5 +1,5 @@
-\name{MultiTrainWithInventory}
-\alias{MultiTrainWithInventory}
+\name{MultiTrainWithInventorySB}
+\alias{MultiTrainWithInventorySB}
 
 \title{ Event Handler for Evaluating Multi Train Systems with Backup Inventory Support }
 
@@ -9,7 +9,7 @@ a history of production output based on various constraints and limitations of t
 }
 
 \usage{
-MultiTrainWithInventory(ModelDetail, CapacityHrs, ReserveHrs, RefillHrs, TurndownLimit=0, TurndownTime=1, ShowProgress=FALSE) 
+MultiTrainWithInventorySB(ModelDetail, CapacityHrs, ReserveHrs, RefillHrs, TurndownLimit=0, TurndownTime=1, ShowProgress=FALSE) 
 }
 
 \arguments{
@@ -22,10 +22,10 @@ MultiTrainWithInventory(ModelDetail, CapacityHrs, ReserveHrs, RefillHrs, Turndow
 \item{RefillHrs}{ The duration in hours that would be required to refill the entire capacity of a storage vessel
  utilizing a given accumulator of known capability.}
 \item{TurndownLimit}{ A fraction of total production at which downstream processing can continue to function
- at minimum rates. This value defaults to zero, which is most permissive.} 
+ at minimum rates. This value defaults to zero; however, no other value is implemented.} 
 \item{TurndownTime}{ The duration in hours required to bring the downstream processing unit down to a new level
- of production, including potential human dialog time for confirmation of intent. This value defaults at 1 hour,
- which has proven to be a very typical of process plant systems requiring human confirmation of turndown request.} 
+ of production, including potential human dialog time for confirmation of intent. This value defaults at 1 hour;
+ however, no other value is implemented.} 
 \item{ShowProgress}{ A boolean value indicating whether a progress bar should be displayed during execution
  of the function.} 
 }
@@ -34,6 +34,11 @@ MultiTrainWithInventory(ModelDetail, CapacityHrs, ReserveHrs, RefillHrs, Turndow
 Returns a list containing two dataframes. The first containing columns for Time, Duration, and ProdRate for each
  total production rate state.  A matrix of 1's and 0's  identify the occurrence of specific production failures by
  cause. These causes may be discharge capacity exceeded, inventory run out, or demand on empty storage.
+}
+
+\details{
+This function is a wrapper calling an older implementation written in 2011 that does not exactly match the logic
+ developed for the presentation at the 8th IMA International Conference on Modelling in Industrial Maintenance and Reliability.  But it should be close. The underlying function was extensively debugged in 2011.
 }
 
 \references{
@@ -55,7 +60,7 @@ Train2_sh<-SimHistory(Train2)
 Train3_sh<-SimHistory(Train3)	
 ChargeSystem<-list(Train1_sh,Train2_sh,Train3_sh)	
 ChargeTrainParallelHistory<-DetailOpLines(ChargeSystem)	
-ChgTwInv<-MultiTrainWithInventory(ChargeTrainParallelHistory, 16, 8, 336)	
+ChgTwInv<-MultiTrainWithInventorySB(ChargeTrainParallelHistory, 16, 8, 336)	
 }
 
 \keyword{ model }

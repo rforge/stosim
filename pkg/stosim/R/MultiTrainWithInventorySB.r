@@ -1,10 +1,14 @@
-MultiTrainWithInventory<-function(ModelDetail, CapacityHrs, ReserveHrs, RefillHrs, TurndownLimit=0, TurndownTime=1, ShowProgress=FALSE) {			
+MultiTrainWithInventorySB<-function(ModelDetail, CapacityHrs, ReserveHrs, RefillHrs, TurndownLimit=0, TurndownTime=1, ShowProgress=FALSE) {			
 	  OutputDF1=NULL		
 	  OutputDF2=NULL		
-	## adjustment of input arguments to match MultiTrainSingleBU4a		
-	ServiceHrs<-CapacityHrs-ReserveHrs		
-	ReserveHrs<-0		
-	## note TurndownLimit is effectively 1 train down with ReserveHrs=0		
+	## adjustment of input arguments to attempt match with MultiTrainSingleBU4a	
+	if(ReserveHrs>=1)  {	
+		ServiceHrs<-CapacityHrs-ReserveHrs+1
+	}else{
+		ServiceHrs<-CapacityHrs-ReserveHrs
+		}
+	## ReserveHrs<-0		
+	## note TurndownLimit is effectively 0 train down with ReserveHrs>0		
 	## TurndownTime is fixed at 1 hr		
 	  ## since the first column of the input file is the Page entry we find the last one		
 	  Pages=ModelDetail[length(ModelDetail[,1]),1]		
