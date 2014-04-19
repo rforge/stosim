@@ -1,4 +1,4 @@
-MultiTrainWithInventorySB<-function(ModelDetail, CapacityHrs, ReserveHrs, RefillHrs, TurndownLimit=0, TurndownTime=1, ShowProgress=FALSE) {			
+MultiTrainWithInventorySB<-function(ModelDetail, CapacityHrs, ReserveHrs, RefillHrs, DischargeCap=1, TurndownLimit=0, TurndownTime=1, ShowProgress=FALSE) {			
 	  OutputDF1=NULL		
 	  OutputDF2=NULL		
 	## adjustment of input arguments to attempt match with MultiTrainSingleBU4a	
@@ -41,8 +41,7 @@ MultiTrainWithInventorySB<-function(ModelDetail, CapacityHrs, ReserveHrs, Refill
 	    NumTrains<-ncol(ModelDetail)-3		
 	    		
 	    ## this is the call to the C++ dll in the stosim library		
-	      RcppList<-.Call("MultiTrainSingleBU4a",TimeVec, DurationVec, GenLevel, CapacityHrs, ServiceHrs , RefillHrs,		
-	       NumTrains,ReserveHrs, PACKAGE="stosim")		
+	      RcppList<-.Call("MultiTrainSingleBU4a",TimeVec, DurationVec, GenLevel, CapacityHrs, ServiceHrs , RefillHrs,NumTrains,ReserveHrs, PACKAGE="stosim")		
 	    		
 	   		
 	    lastline<-match(max(RcppList[[1]][,1]),RcppList[[1]][,1])		
