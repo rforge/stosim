@@ -1,8 +1,8 @@
 Package: stosim
 Type: Package
 Title: Stochastic Simulator
-Version: 0.0.8
-Date: 2014-4-19
+Version: 0.0.9
+Date: 2014-4-21
 Author: Jacob T. Ormerod
 Maintainer: Jacob T. Ormerod <jake@openreliability.org>
 Description: Reliability Modeling for Repairable Systems

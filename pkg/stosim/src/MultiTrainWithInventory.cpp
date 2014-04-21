@@ -63,163 +63,193 @@ using namespace Rcpp;
 										
 										
 // At Failure										
-		if(GenRate[x] < GenRate[x-1])  {								
-// exclude evaluation of non-operational system										
-			if(LastProdRate > 0)  {							
-				DemandRate = LastProdRate-GenRate[x];						
-// exclude evaluation of excess demand										
-				if( (DischargeCap- DemandRate*numTrains + 1e-9)>0 )  {						
-// exclude evaluation of no inventory										
-					if(StartInventory > 0)  {					
-// establish whether above or below Reserve with more than a turndown margin										
-// Inventory_consumption_before_turndown <- DemandRate*numTrains*TurndownTime										
-						if(StartInventory > ReserveHrs + DemandRate*numTrains*TurndownTime)  {				
-// Determine EndInventory										
-							EndInventory = StartInventory-DemandRate*numTrains*inDuration[x];			
-							if(EndInventory > ReserveHrs)  {			
-// successful backup from inventory, no change to ProdRate										
-								EndInv[x] = EndInventory;		
-							}else{			
-// determine time at which Reserve level was hit										
-								DurationToReserve =  (StartInventory - ReserveHrs)/(DemandRate*numTrains);		
-// This case will end at Reserve inventory or below										
-								if((GenRate[x] -TurndownLimit+1e-9)>0)  {		
-// fill elements of the output vectors										
-									outTime[y] = inTime[x] + DurationToReserve;	
-//  the previous outDuration is known										
-									outDuration[y-1] = outTime[y] - outTime[y-1];	
-									outProd[y] = GenRate[x];	
-									DisCapEx[y] = 0;	
-									RunOut[y] = 0;	
-									EmptyOnD[y] = 0;	
-										
-										
-										
-									y=y+1;	
-// this is an end of the train state										
-									EndInv[x] = ReserveHrs;	
-								}else{		
-// fill elements of the output vectors										
-									outTime[y] = inTime[x] + DurationToReserve;	
-//  the previous outDuration is known										
-									outDuration[y-1] = outTime[y] - outTime[y-1];	
-									outProd[y] = TurndownLimit;	
-									DisCapEx[y] = 0;	
-									RunOut[y] = 0;	
-									EmptyOnD[y] = 0;	
-										
-										
-										
-									y=y+1;	
-										
-// the train state case is not necessarily over yet										
-									TurndownDemandRate = TurndownLimit - GenRate[x];	
-									EndInventory = ReserveHrs - TurndownDemandRate*numTrains*(inDuration[x] - DurationToReserve);	
-									if(EndInventory > 0)  {	
-// this is an end of the train state										
-										
-									}else{	
-// this case will runout based on TurndownDemandRate										
-// fill elements of the output vectors										
-// use the negative EndInventory to figure out when the runout occurred										
-										outTime[y] = inTime[x] + inDuration[y] + EndInventory/(TurndownDemandRate*numTrains);
-//  the previous outDuration is known										
-										outDuration[y-1] = outTime[y] - outTime[y-1];
-										outProd[y] = 0;
-										DisCapEx[y] = 0;
-										RunOut[y] = 1;
-										EmptyOnD[y] = 0;
-										
-										
-										
-										y=y+1;
-// this is an end of the train state										
-										EndInv[x] = 0;
-									}	
-								}		
-							}			
-						}else{				
+        if(GenRate[x] < GenRate[x-1])  {
+// exclude evaluation of non-operational system
+            if(LastProdRate > 0)  {
+                DemandRate = LastProdRate-GenRate[x];
+// exclude evaluation of excess demand
+                if( (DischargeCap- DemandRate*numTrains + 1e-9)>0 )  {
+// exclude evaluation of no inventory
+                    if(StartInventory > 0)  {
+// establish whether above or below Reserve with more than a turndown margin
+// Inventory_consumption_before_turndown <- DemandRate*numTrains*TurndownTime
+                        if(StartInventory > ReserveHrs + DemandRate*numTrains*TurndownTime)  {
+// Determine EndInventory
+                            EndInventory = StartInventory-DemandRate*numTrains*inDuration[x];
+                            if(EndInventory > ReserveHrs)  {
+// successful backup from inventory, no change to ProdRate
+                                EndInv[x] = EndInventory;
+                            }else{
+// determine time at which Reserve level was hit
+                                DurationToReserve =  (StartInventory - ReserveHrs)/(DemandRate*numTrains);
+// This case will end at Reserve inventory or below
+                                if((GenRate[x] -TurndownLimit+1e-9)>0)  {
+// fill elements of the output vectors
+                                    outTime[y] = inTime[x] + DurationToReserve;
+//  the previous outDuration is known
+                                    outDuration[y-1] = outTime[y] - outTime[y-1];
+                                    outProd[y] = GenRate[x];
+                                    DisCapEx[y] = 0;
+                                    RunOut[y] = 0;
+                                    EmptyOnD[y] = 0;
+
+
+
+                                    y=y+1;
+// this is an end of the train state
+                                    EndInv[x] = ReserveHrs;
+                                }else{
+// fill elements of the output vectors
+                                    outTime[y] = inTime[x] + DurationToReserve;
+//  the previous outDuration is known
+                                    outDuration[y-1] = outTime[y] - outTime[y-1];
+                                    outProd[y] = TurndownLimit;
+                                    DisCapEx[y] = 0;
+                                    RunOut[y] = 0;
+                                    EmptyOnD[y] = 0;
+
+
+
+                                    y=y+1;
+
+// the train state case is not necessarily over yet
+                                    TurndownDemandRate = TurndownLimit - GenRate[x];
+                                    EndInventory = ReserveHrs - TurndownDemandRate*numTrains*(inDuration[x] - DurationToReserve);
+                                    if(EndInventory > 0)  {
+// this is an end of the train state
+                                            EndInv[x] = EndInventory;
+                                    }else{
+// this case will runout based on TurndownDemandRate
+// fill elements of the output vectors
+// use the negative EndInventory to figure out when the runout occurred
+                                        outTime[y] = inTime[x] + inDuration[x] + EndInventory/(TurndownDemandRate*numTrains);
+//  the previous outDuration is known
+                                        outDuration[y-1] = outTime[y] - outTime[y-1];
+                                        outProd[y] = 0;
+                                        DisCapEx[y] = 0;
+                                        RunOut[y] = 1;
+                                        EmptyOnD[y] = 0;
+
+
+
+                                        y=y+1;
+// this is an end of the train state
+                                        EndInv[x] = 0;
+                                    }
+                                }
+                            }
+                        }else{
+
 // this case starts within Reserve, it is permitted to run for TurndownTime										
-// Determine EndInventory										
-							EndInventory = StartInventory-DemandRate*numTrains*TurndownTime;			
-							if(EndInventory > 0)  {			
-								if( GenRate[x] >= TurndownLimit) {		
-										
-									outTime[y] = inTime[x] + TurndownTime;	
-//  the previous outDuration is known										
-									outDuration[y-1] = outTime[y] - outTime[y-1];	
-									outProd[y] = GenRate[x];	
-									DisCapEx[y] = 0;	
-									RunOut[y] = 0;	
-									EmptyOnD[y] = 0;	
-										
-										
-										
-									y=y+1;	
-// this is an end of the train state										
-									EndInv[x] = EndInventory;	
-								}else{		
-// there will still be demand since GenRate is below TurndownLimit										
-// after setting a new set of conditions for wid entry the EndInventory needs to be redetermined										
-										
-										
-									outTime[y] = inTime[x] + TurndownTime;	
-										
-									outDuration[y-1] = outTime[y] - outTime[y-1];	
-									outProd[y] = TurndownLimit;	
-									DisCapEx[y] = 0;	
-									RunOut[y] = 0;	
-									EmptyOnD[y] = 0;	
-										
-										
-										
-									y=y+1;	
-										
-// now re-determine the EndInventory based on remaining Duration										
-// Determine EndInventory										
-									TurndownDemandRate = TurndownLimit-GenRate[x];	
-									EndInventory = EndInventory-TurndownDemandRate*numTrains*(inDuration[x]-TurndownTime);	
-									if(EndInventory > 0)  {	
-// successful backup from inventory, no further change to ProdRate										
-										EndInv[x] = EndInventory;
-									}else{	
-// This case has been a run out at TurndownLimit										
-// use the negative EndInventory to figure out when the runout occurred										
-										
-										outTime[y] = inTime[x] + inDuration[x] + EndInventory/(TurndownDemandRate*numTrains);
-										
-										outDuration[y-1] = outTime[y] - outTime[y-1];
-										outProd[y] = 0;
-										DisCapEx[y] = 0;
-										RunOut[y] = 1;
-										EmptyOnD[y] = 0;
-										
-										
-										
-										y=y+1;
-// this is an end of the train state										
-										EndInv[x] = 0;
-									}	
-								}		
-							}else{			
-// inventory runs out during turndown time										
-										
-										
-								outTime[y] = inTime[x] + inDuration[x] + EndInventory/(DemandRate*numTrains);		
-										
-								outDuration[y-1] = outTime[y] - outTime[y-1];		
-								outProd[y] = 0;		
-								DisCapEx[y] = 0;		
-								RunOut[y] = 1;		
-								EmptyOnD[y] = 0;		
-										
-										
-										
-								y=y+1;		
-										
-								EndInv[x] = 0;		
-							}			
-						}				
+    // Will duration of event permit full turndown?
+
+                                if(( inDuration[x] -TurndownTime -  1e-9) > 0)  {
+    // Determine EndInventory
+                                    EndInventory = StartInventory-DemandRate*numTrains*TurndownTime;
+                                    if(EndInventory > 0)  {
+                                        if( GenRate[x] >= TurndownLimit) {
+
+                                            outTime[y] = inTime[x] + TurndownTime;
+    //  the previous outDuration is known
+                                            outDuration[y-1] = outTime[y] - outTime[y-1];
+                                            outProd[y] = GenRate[x];
+                                            DisCapEx[y] = 0;
+                                            RunOut[y] = 0;
+                                            EmptyOnD[y] = 0;
+
+
+
+                                            y=y+1;
+    // this is an end of the train state
+                                            EndInv[x] = EndInventory;
+                                        }else{
+    // there will still be demand since GenRate is below TurndownLimit
+    // after setting a new set of conditions for wid entry the EndInventory needs to be redetermined
+
+
+                                            outTime[y] = inTime[x] + TurndownTime;
+
+                                            outDuration[y-1] = outTime[y] - outTime[y-1];
+                                            outProd[y] = TurndownLimit;
+                                            DisCapEx[y] = 0;
+                                            RunOut[y] = 0;
+                                            EmptyOnD[y] = 0;
+
+
+
+                                            y=y+1;
+
+    // now re-determine the EndInventory based on remaining Duration
+    // Determine EndInventory
+                                            TurndownDemandRate = TurndownLimit-GenRate[x];
+                                            EndInventory = EndInventory-TurndownDemandRate*numTrains*(inDuration[x]-TurndownTime);
+                                            if(EndInventory > 0)  {
+    // successful backup from inventory, no further change to ProdRate
+                                                EndInv[x] = EndInventory;
+                                            }else{
+    // This case has been a run out at TurndownLimit
+    // use the negative EndInventory to figure out when the runout occurred
+
+                                                outTime[y] = inTime[x] + inDuration[x] + EndInventory/(TurndownDemandRate*numTrains);
+
+                                                outDuration[y-1] = outTime[y] - outTime[y-1];
+                                                outProd[y] = 0;
+                                                DisCapEx[y] = 0;
+                                                RunOut[y] = 1;
+                                                EmptyOnD[y] = 0;
+
+
+
+                                                y=y+1;
+    // this is an end of the train state
+                                                EndInv[x] = 0;
+                                            }
+                                        }
+                                    }else{
+    // inventory runs out during turndown time
+
+
+                                        outTime[y] = inTime[x] + inDuration[x] + EndInventory/(DemandRate*numTrains);
+
+                                        outDuration[y-1] = outTime[y] - outTime[y-1];
+                                        outProd[y] = 0;
+                                        DisCapEx[y] = 0;
+                                        RunOut[y] = 1;
+                                        EmptyOnD[y] = 0;
+
+
+
+                                        y=y+1;
+
+                                        EndInv[x] = 0;
+                                    }
+                                }else{
+    // Debugging revealed improper handling of incomplete turndown cases
+    // Determine EndInventory
+                                    EndInventory = StartInventory-DemandRate*numTrains*inDuration[x];
+                                    if(EndInventory > 0)  {
+    // in this case there is no change in ProdRate, no entry to wid
+                                        EndInv[x] = EndInventory;
+                                    }else{
+    // inventory runs out during turndown time
+    // use the negative EndInventory to figure out when the runout occurred
+
+                                        outTime[y] = inTime[x] + inDuration[x] +  EndInventory/(DemandRate*numTrains);
+                                        outDuration[y-1] = outTime[y] - outTime[y-1];
+                                        outProd[y] = 0;
+                                        DisCapEx[y] = 0;
+                                        RunOut[y] = 1;
+                                        EmptyOnD[y] = 0;
+
+
+
+                                        y=y+1;
+
+                                        EndInv[x] = 0;
+
+                                    }
+                                }
+							}				
 					}else{					
 // A special case that may only occur if ReserveHrs=0, this is the EmptyOnDemand case										
 										
