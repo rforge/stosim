@@ -9,7 +9,8 @@ a history of production output based on various constraints and limitations of t
 }
 
 \usage{
-MultiTrainWithInventorySB(ModelDetail, CapacityHrs, ReserveHrs, RefillHrs, DischargeCap=1, TurndownLimit=0, TurndownTime=1, ShowProgress=FALSE) 
+MultiTrainWithInventorySB(ModelDetail, CapacityHrs, ReserveHrs, RefillHrs, DischargeCap=1, TurndownLimit=0, TurndownTime=1,
+ ShowProgress=FALSE) 
 }
 
 \arguments{
