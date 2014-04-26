@@ -10,7 +10,7 @@ a history of production output based on various constraints and limitations of t
 
 \usage{
 MultiTrainWithInventory(model, CapacityHrs, ReserveHrs, RefillTime, DischargeCap=1,
- TurndownLimit=0.6, TurndownTime=1, ShowProgress=FALSE) 
+ TurndownLimit=0.6, TurndownTime=1, ProgRpt=FALSE) 
 }
 
 \arguments{
@@ -28,7 +28,7 @@ MultiTrainWithInventory(model, CapacityHrs, ReserveHrs, RefillTime, DischargeCap
 \item{TurndownTime}{ The duration in hours required to bring the downstream processing unit down to a new level
  of production, including potential human dialog time for confirmation of intent. This value defaults at 1 hour,
  which has proven to be a very typical of process plant systems requiring human confirmation of turndown request.} 
-\item{ShowProgress}{ A boolean value indicating whether a progress bar should be displayed during execution
+\item{ProgRpt}{ A boolean value indicating whether a progress bar should be displayed, if sensible, during execution
  of the function.} 
 }
 
@@ -51,14 +51,14 @@ Train2seeds<-data.frame(Seed=Train1$Seed+200)
 Train2<-cbind(Train2,Train2seeds)	
 Train3<-Train2[,-11]	
 Train3seeds<-data.frame(Seed=Train2$Seed+200)	
-Train3<-cbind(Train3,Train3seeds)	
-\dontrun{Train1_sh<-SimHistory(Train1)	
-Train2_sh<-SimHistory(Train2)	
-Train3_sh<-SimHistory(Train3)	
+Train3<-cbind(Train3,Train3seeds)
+## note simulation drastically reduced for example run	
+Train1_sh<-SimHistory(Train1,100,100)	
+Train2_sh<-SimHistory(Train2,100,100)	
+Train3_sh<-SimHistory(Train3,100,100)	
 ChargeSystem<-list(Train1_sh,Train2_sh,Train3_sh)	
 ChargeTrainParallelHistory<-DetailOpLines(ChargeSystem)	
 ChgTwInv<-MultiTrainWithInventory(ChargeTrainParallelHistory, 16, 8, 336)	
-}
 }
 
 \keyword{ model }

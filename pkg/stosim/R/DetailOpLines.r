@@ -5,7 +5,7 @@
  ##        ( c ) 2011-2014 OpenReliability.org				
 ##				
 				
- DetailOpLines<-function(Model,Names=NULL)  {				
+ DetailOpLines<-function(Model,Names=NULL, ProgRpt=FALSE)  {				
 				
 	## Initialize a ShowProgress boolean object			
 	ShowProgress=FALSE			
@@ -83,11 +83,14 @@ for(p in 1:Pages)  {
 	if(p==1)  { 			
 	oneCycle<-proc.time()			
 	TimeTest<-(oneCycle[3]-startTime[3])*Pages			
-	## still need to find the correct TimeTest value			
-	if(TimeTest > 2)  {			
-	pb <- tkProgressBar(title = "OpLine Detail Progress", min = 0,			
-	         max = Pages, width = 300)			
-	ShowProgress=TRUE  }			
+		if(ProgRpt==TRUE)  {			  
+		  ## still need to find the correct TimeTest value				
+			  if(TimeTest > .5)  {				
+			  pb <- tkProgressBar(title = "MultiTrainWithInventory Progress", min = 0,				
+					   max = Pages, width = 300)				
+			  ShowProgress=TRUE				
+			  }	
+		}			
 	}			
 				
 	if(ShowProgress==TRUE)  {			

@@ -1,5 +1,5 @@
-   SimHistory<-function(Model,SimulationYears = 2000,SimulationYearsPerPage = 1000) { 
-     
+   SimHistory<-function(Model,SimulationYears = 2000,SimulationYearsPerPage = 1000,
+   ProgRpt=FALSE) {      
   
   ShowProgress=FALSE
   thisRNGkind="Marsaglia-Multicarry"
@@ -92,11 +92,14 @@ for(p in 1:Pages)  {
   if(p==1)  {
     oneCycle<-proc.time()
     TimeTest<-(oneCycle[3]-startTime[3])*Pages
-    if(TimeTest>0.5)  {
-      pb<-tkProgressBar(title = "SimHistory Progress", min=0,
-                        max = Pages, width=300)
-      ShowProgress=TRUE
-    }
+		if(ProgRpt==TRUE)  {			  
+		  ## still need to find the correct TimeTest value				
+			  if(TimeTest > .5)  {				
+			  pb <- tkProgressBar(title = "MultiTrainWithInventory Progress", min = 0,				
+					   max = Pages, width = 300)				
+			  ShowProgress=TRUE			
+			  }	
+		}
     
   } 
   
