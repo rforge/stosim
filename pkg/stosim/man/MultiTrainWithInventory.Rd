@@ -49,14 +49,10 @@ Train1<-ChargeTrain
 Train2<-Train1[,-11]	
 Train2seeds<-data.frame(Seed=Train1$Seed+200)	
 Train2<-cbind(Train2,Train2seeds)	
-Train3<-Train2[,-11]	
-Train3seeds<-data.frame(Seed=Train2$Seed+200)	
-Train3<-cbind(Train3,Train3seeds)
 ## note simulation drastically reduced for example run	
-Train1_sh<-SimHistory(Train1,100,100)	
-Train2_sh<-SimHistory(Train2,100,100)	
-Train3_sh<-SimHistory(Train3,100,100)	
-ChargeSystem<-list(Train1_sh,Train2_sh,Train3_sh)	
+Train1_sh<-SimHistory(Train1,10,10)	
+Train2_sh<-SimHistory(Train2,10,10)	
+ChargeSystem<-list(Train1_sh,Train2_sh)	
 ChargeTrainParallelHistory<-DetailOpLines(ChargeSystem)	
 ChgTwInv<-MultiTrainWithInventory(ChargeTrainParallelHistory, 16, 8, 336)	
 }
