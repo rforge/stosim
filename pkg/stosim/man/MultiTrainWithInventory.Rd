@@ -44,6 +44,7 @@ Ormerod JT, "Using Stochastic RAM Analysis to Establish an Optimal Operating Pol
 }
 
 \examples{
+\dontrun{
 data(ChargeTrain)	
 Train1<-ChargeTrain		
 Train2<-Train1[,-11]	
@@ -53,8 +54,9 @@ Train2<-cbind(Train2,Train2seeds)
 Train1_sh<-SimHistory(Train1,10,10)	
 Train2_sh<-SimHistory(Train2,10,10)	
 ChargeSystem<-list(Train1_sh,Train2_sh)	
-ChargeTrainParallelHistory<-DetailOpLines(ChargeSystem)	
-ChgTwInv<-MultiTrainWithInventory(ChargeTrainParallelHistory, 16, 8, 336)	
+ChargeTrainParallelHistory<-DetailOpLines(ChargeSystem)
+ChgTwInv<-MultiTrainWithInventory(ChargeTrainParallelHistory, 16, 8, 336)
+}	
 }
 
 \keyword{ model }

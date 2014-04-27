@@ -41,7 +41,10 @@
 				
 	nextPageStarts<-rep(1,length(Model))			
 				
-	startTime<-proc.time()			
+## even proc.time has a problem on CRAN example run
+if(ProgRpt==TRUE)  {			
+	startTime<-proc.time()	
+}				
 				
 for(p in 1:Pages)  {				
 	thisPageStarts<-nextPageStarts			
@@ -80,11 +83,11 @@ for(p in 1:Pages)  {
 	OutputDF<-rbind(OutputDF,RcppDF)			
 				
 				
-	if(p==1)  { 			
-	oneCycle<-proc.time()			
-	TimeTest<-(oneCycle[3]-startTime[3])*Pages			
-		if(ProgRpt==TRUE)  {			  
-		  ## still need to find the correct TimeTest value				
+	if(p==1)  { 
+		if(ProgRpt==TRUE)  {	
+			oneCycle<-proc.time()			
+			TimeTest<-(oneCycle[3]-startTime[3])*Pages	
+			  ## still need to find the correct TimeTest value				
 			  if(TimeTest > .5)  {				
 			  pb <- tkProgressBar(title = "MultiTrainWithInventory Progress", min = 0,				
 					   max = Pages, width = 300)				

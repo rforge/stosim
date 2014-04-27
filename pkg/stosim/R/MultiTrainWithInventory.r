@@ -5,13 +5,12 @@ MultiTrainWithInventory<-function(model, CapacityHrs, ReserveHrs, RefillTime, Di
 		  OutputDF2=NULL				
 		  ## since the first column of the input file is the Page entry we find the last one				
 		  Pages=model[length(model[,1]),1]				
-		  				
-		  ##if(ShowProgress==TRUE)  {				
-		      ##pb <- tkProgressBar(title = "MultiTrainWithInventory Progress", min = 0,				
-		               ##max = Pages, width = 300)				
-		    ##}				
-		    nextPageStarts<-1				
-		    startTime<-proc.time()				
+		  							
+		    nextPageStarts<-1
+## even proc.time has a problem on CRAN example run
+if(ProgRpt==TRUE)  {			
+	startTime<-proc.time()	
+}			
 		    				
 	    for(p in 1:Pages)  {					
 	    					
@@ -54,10 +53,10 @@ MultiTrainWithInventory<-function(model, CapacityHrs, ReserveHrs, RefillTime, Di
 		    				
 		    				
 		    				
-		    if(p==1)  { 				
-		      oneCycle<-proc.time()				
-		      TimeTest<-(oneCycle[3]-startTime[3])*Pages
-				if(ProgRpt==TRUE)  {			  
+		    if(p==1)  { 
+				if(ProgRpt==TRUE)  {			
+				  oneCycle<-proc.time()				
+				  TimeTest<-(oneCycle[3]-startTime[3])*Pages	  
 				  ## still need to find the correct TimeTest value				
 					  if(TimeTest > .5)  {				
 					  pb <- tkProgressBar(title = "MultiTrainSingleBU Progress", min = 0,				

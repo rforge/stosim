@@ -65,8 +65,10 @@
 	Seed_Vec<-as.integer(Model[,11])			
 				
 	OutputDF=NULL			
-  startTime<-proc.time()
-  
+## even proc.time has a problem on CRAN example run
+if(ProgRpt==TRUE)  {			
+	startTime<-proc.time()	
+}	  
   
 ## the main loop through pages				
 for(p in 1:Pages)  {				
@@ -90,16 +92,16 @@ for(p in 1:Pages)  {
 	OutputDF<-rbind(OutputDF,fun_out)	
   
   if(p==1)  {
-    oneCycle<-proc.time()
-    TimeTest<-(oneCycle[3]-startTime[3])*Pages
-		if(ProgRpt==TRUE)  {			  
+	if(ProgRpt==TRUE)  {
+		oneCycle<-proc.time()
+		TimeTest<-(oneCycle[3]-startTime[3])*Pages		  
 		  ## still need to find the correct TimeTest value				
-			  if(TimeTest > .5)  {				
-			  pb <- tkProgressBar(title = "MultiTrainWithInventory Progress", min = 0,				
-					   max = Pages, width = 300)				
-			  ShowProgress=TRUE			
-			  }	
-		}
+		  if(TimeTest > .5)  {				
+		  pb <- tkProgressBar(title = "MultiTrainWithInventory Progress", min = 0,				
+				   max = Pages, width = 300)				
+		  ShowProgress=TRUE			
+		  }	
+	}
     
   } 
   
