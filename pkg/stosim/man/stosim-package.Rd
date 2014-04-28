@@ -2,12 +2,10 @@
 \alias{stosim}
 \docType{package}
 \title{
-Stochastic Simulator
+Stochastic Simulator for Reliability Modeling of Repairable Systems
 }
 \description{
-Stochastic discete event reliability modeling for repairable systems, such as 
-unit operations in power generation, chemical process plants, refineries,
- and electronics fabs. 
+A toolkit intended for Reliability Availability and Maintainability (RAM) modeling of industrial process systems. 
 
 It is recommended for use with RExcel for data input, holding of the model 
 scripts, and ad hoc analysis of reliability parameters.
