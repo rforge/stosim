@@ -490,7 +490,7 @@ using namespace Rcpp;
 							outTime[y] = inTime[x];				
 											
 							outDuration[y-1] = outTime[y] - outTime[y-1];				
-							outProd[y] = 0;				
+							outProd[y] = GenRate[x];				
 							DisCapEx[y] = 0;				
 							RunOut[y] = 0;				
 							EmptyOnD[y] = 0;				
